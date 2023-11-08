@@ -1,0 +1,51 @@
+server:
+  port: 7001
+spring:
+  rabbitmq:
+    addresses: 172.0.16.89:31501
+    username: root
+    password: xxxx
+    publisher-returns: false
+    virtual-host:
+    connection-timeout: 10s
+    publisher-confirm-type: correlated
+    listener:
+      acknowledge-mode: manual
+      type: simple
+      simple:
+        acknowledge-mode: manual
+        #本地每个消费者线程缓存最大unack数
+        prefetch: 250
+        #最小消费者线程
+        concurrency: 1
+        #最大消费者线程
+        max-concurrency: 1
+        #开启批量消费
+        #consumer-batch-enabled: true
+        #batch-size: 10
+        retry:
+          #开启重试
+          enabled: true
+          #最大重试次数
+          max-attempts: 5
+          #最小重试间隔
+          initial-interval: 1000ms
+          #最大重试间隔
+          max-interval: 5000ms
+          #系数
+          multiplier: 2
+mqtt:
+  url: tcp://172.0.16.89:31803
+  username: admin
+  clientIdPrefix: test_client
+  password: xxxx
+  receive-topics:
+  - qos: 1
+    name: $share/water/mqtt_exchange
+  - qos: 1
+    name: test
+  keep-alive: 15
+  completion-timeout: 3000
+
+
+
